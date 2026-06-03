@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帝国量化资本</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      --imperial-blue: #0A1A35;
+      --tech-blue: #007BFF;
+      --gold: #D4AF37;
+    }
+    .cryptedmail:after {
+      content: attr(data-name) "@" attr(data-domain) "." attr(data-tld); 
+    }
+  </style>
+</head>
+<body class="bg-[var(--imperial-blue)] text-white">
+  <!-- 其他代码保持不变... -->
+
+  <!-- 联系我们 -->
+  <footer id="contact" class="py-12 bg-[var(--imperial-blue)] border-t border-[var(--tech-blue)]">
+    <div class="container mx-auto px-4 text-center">
+      <h3 class="text-2xl text-[var(--gold)] mb-4">联系我们</h3>
+      <div class="flex flex-col md:flex-row justify-center gap-6 mb-6">
+        <div class="bg-[#1A2A4A] p-4 rounded-lg">
+          <span class="cryptedmail text-lg" 
+                data-name="wanghongyaowang355"
+                data-domain="gmail"
+                data-tld="com"
+                onclick="this.innerHTML='mailto:'+this.dataset.name+'@'+this.dataset.domain+'.'+this.dataset.tld"
+                style="cursor:pointer; text-decoration:underline">
+          </span>
+        </div>
+        <div class="bg-[#1A2A4A] p-4 rounded-lg">
+          <span class="cryptedmail text-lg" 
+                data-name="keenyi91com"
+                data-domain="gmail"
+                data-tld="com"
+                onclick="this.innerHTML='mailto:'+this.dataset.name+'@'+this.dataset.domain+'.'+this.dataset.tld"
+                style="cursor:pointer; text-decoration:underline">
+          </span>
+        </div>
+      </div>
+      <p>© 2026 帝国量化资本 版权所有</p>
+    </div>
+  </footer>
+
+  <!-- 防爬虫脚本 -->
+  <script>
+    // 邮箱点击时显示真实地址
+    document.querySelectorAll('.cryptedmail').forEach(mail => {
+      mail.addEventListener('click', function() {
+        this.innerHTML = `${this.dataset.name}@${this.dataset.domain}.${this.dataset.tld}`;
+      });
+    });
+  </script>
+</body>
+</html>
