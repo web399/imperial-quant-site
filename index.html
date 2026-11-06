@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="帝国量化资本 Imperial Quant Capital：了解量化研究、策略框架与风险管理，联系团队交流合作。">
   <title>帝国量化资本 | Imperial Quant Capital</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
@@ -210,7 +211,44 @@
       footer { flex-direction: column; text-align: center; padding: 28px 20px; }
       #hero { padding: 100px 20px 60px; }
     }
-  </style>
+  
+/* Responsive and accessible refinements */
+:root { --muted: #a6b3c9; }
+section { scroll-margin-top: 100px; }
+.fade-up { opacity: 1; transform: none; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
+.menu-toggle { display:none; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px 14px; font:inherit; }
+.hero-sub { max-width: 640px; margin-left:auto; margin-right:auto; }
+.sec-inner { max-width:1240px; }
+.metric { min-width:0; padding:18px 8px; }
+.metric-val { font-size:clamp(18px,2.4vw,30px); overflow-wrap:anywhere; }
+.form-note { color:var(--muted); font-size:12px; line-height:1.8; }
+.detail-text { overflow-wrap:anywhere; }
+@media(max-width:1050px) {
+ header { padding:14px 20px; }
+ nav { gap:18px; }
+}
+@media(max-width:768px) {
+ .menu-toggle { display:block; }
+ nav.open { display:flex; position:absolute; top:100%; left:0; right:0; padding:20px; background:var(--navy-mid); flex-direction:column; align-items:stretch; gap:8px; border-bottom:1px solid var(--gold); }
+ nav a { padding:12px; }
+ .hero-title { font-size:clamp(30px,8vw,48px); line-height:1.4; }
+ .hero-badge { letter-spacing:1px; font-size:10px; padding:8px 10px; line-height:1.8; }
+ .hero-stats { display:grid; grid-template-columns:1fr 1fr; margin-top:48px; }
+ .stat-num { font-size:32px; }
+ #about,#global,#competencies,#alpha,#compliance,#contact { padding:72px 0; }
+ .sec-head { margin-bottom:36px; }
+ .alpha-panel { padding:22px 16px; }
+ .metric-row { gap:6px; }
+ .metric-key { letter-spacing:0; }
+ .hero-btns a { flex:1; min-width:160px; padding:14px 18px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ html { scroll-behavior:auto; }
+ *,*::before,*::after { animation:none !important; transition:none !important; }
+ #bg-canvas { display:none; }
+}
+</style>
 </head>
 <body>
 
@@ -225,7 +263,8 @@
       <span class="en">IMPERIAL QUANT CAPITAL</span>
     </div>
   </a>
-  <nav>
+  <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单</button>
+  <nav id="main-nav" aria-label="主导航">
     <a href="#about">关于我们</a>
     <a href="#global">全球运营</a>
     <a href="#competencies">核心能力</a>
@@ -493,13 +532,13 @@
           </div>
         </div>
       </div>
-      <div class="contact-form">
-        <div class="form-group"><label>姓名</label><input type="text" placeholder="您的姓名"></div>
-        <div class="form-group"><label>所在机构</label><input type="text" placeholder="公司或机构名称"></div>
-        <div class="form-group"><label>电子邮箱</label><input type="email" placeholder="your@email.com"></div>
+      <form class="contact-form" id="inquiry-form">
+        <div class="form-group"><label for="contact-name">姓名</label><input id="contact-name" name="name" autocomplete="name" required maxlength="100" type="text" placeholder="您的姓名"></div>
+        <div class="form-group"><label for="contact-org">所在机构（选填）</label><input id="contact-org" name="organization" autocomplete="organization" maxlength="200" type="text" placeholder="公司或机构名称"></div>
+        <div class="form-group"><label for="contact-email">电子邮箱</label><input id="contact-email" name="email" autocomplete="email" required type="email" placeholder="your@email.com"></div>
         <div class="form-group">
-          <label>咨询类型</label>
-          <select>
+          <label for="contact-type">咨询类型</label>
+          <select id="contact-type" name="type" required>
             <option value="">请选择咨询类型</option>
             <option>投资者关系</option>
             <option>机构合作</option>
@@ -508,9 +547,9 @@
             <option>其他咨询</option>
           </select>
         </div>
-        <div class="form-group"><label>留言内容</label><textarea placeholder="请输入您的留言..."></textarea></div>
-        <button class="form-submit" onclick="alert('感谢您的咨询，我们的团队将在2个工作日内与您联系。')">发送咨询 →</button>
-      </div>
+        <div class="form-group"><label for="contact-message">留言内容</label><textarea id="contact-message" name="message" required maxlength="3000" placeholder="请输入您的留言..."></textarea></div>
+        <p class="form-note">此表单将打开您的邮件应用，由您确认发送。请勿填写账户密码或其他敏感信息。</p><button class="form-submit" type="submit">通过邮件咨询 →</button><p class="form-note" id="form-status" role="status"></p>
+</form>
     </div>
   </div>
 </section>
@@ -538,6 +577,7 @@
   resize(); window.addEventListener('resize', resize);
   for (let i = 0; i < 80; i++) particles.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, r: Math.random()*1.5+0.3, dx: (Math.random()-0.5)*0.3, dy: (Math.random()-0.5)*0.3, alpha: Math.random()*0.5+0.1 });
   function draw() {
+    if (document.hidden) { requestAnimationFrame(draw); return; }
     ctx.clearRect(0,0,W,H);
     particles.forEach(p => {
       ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
@@ -551,7 +591,7 @@
     }
     requestAnimationFrame(draw);
   }
-  draw();
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
 
   /* 滚动淡入 */
   const obs = new IntersectionObserver(entries => {
@@ -569,8 +609,26 @@
 
   /* 平滑滚动 */
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}});
+    a.addEventListener('click',e=>{const href=a.getAttribute('href');const t=href==='#'?document.body:document.getElementById(href.slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}});
   });
 </script>
-</body>
+<script>
+const menuButton=document.querySelector('.menu-toggle');
+const mainNav=document.getElementById('main-nav');
+function closeMenu(){mainNav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}
+menuButton.addEventListener('click',()=>{const open=mainNav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));});
+mainNav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mainNav.classList.contains('open')){closeMenu();menuButton.focus();}});
+document.querySelectorAll('.alpha-tab').forEach(tab=>{
+ tab.setAttribute('role','button');tab.tabIndex=0;
+ tab.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tab.click();}});
+});
+document.getElementById('inquiry-form').addEventListener('submit',e=>{
+ e.preventDefault();
+ const data=new FormData(e.currentTarget);
+ const body=['姓名：'+data.get('name'),'机构：'+data.get('organization'),'邮箱：'+data.get('email'),'咨询类型：'+data.get('type'),'','留言：',data.get('message')].join('\n');
+ window.location.href='mailto:keenyi91com@gmail.com?subject='+encodeURIComponent('官网咨询：'+data.get('type'))+'&body='+encodeURIComponent(body);
+ document.getElementById('form-status').textContent='已尝试打开邮件应用，邮件尚未自动发送。如未打开，请直接发送至 keenyi91com@gmail.com。';
+});
+</script></body>
 </html>
