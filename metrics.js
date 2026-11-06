@@ -34,8 +34,8 @@ function chart(svg,history,key){
 }
 function render(s){
  cancelAnimationFrame(frame);target=s;
- if(!s){status.textContent='展示模式 · 数据未接入';topEquity.textContent='—';root.setAttribute('aria-label','账户数据未接入');cards.forEach(c=>{c.querySelector('strong').textContent='—';c.querySelector('small').textContent='未接入';c.querySelector('.metric-detail').textContent='';c.querySelector('svg')?.setAttribute('hidden','');});last=null;return;}
- status.textContent='模拟数据 · 非真实账户';root.setAttribute('aria-label','模拟账户指标：演示数据，非真实收益');
+ if(!s){status.lang='zh-CN';status.dir='ltr';status.textContent='展示模式 · 数据未接入';topEquity.textContent='—';root.setAttribute('aria-label','账户数据未接入');cards.forEach(c=>{c.querySelector('strong').textContent='—';c.querySelector('small').textContent='未接入';c.querySelector('.metric-detail').textContent='';c.querySelector('svg')?.setAttribute('hidden','');});last=null;return;}
+ status.textContent='بيانات محاكاة · حساب غير حقيقي';status.lang='ar';status.dir='rtl';root.setAttribute('aria-label','模拟账户指标：演示数据，非真实收益');
  cards.forEach((c,i)=>{
  c.querySelector('small').textContent='演示数据';
  if(last&&last[keys[i]]!==s[keys[i]]&&!reduced.matches){const up=s[keys[i]]>last[keys[i]];c.querySelector('strong').animate([{color:up?'var(--up)':'var(--down)'},{color:getComputedStyle(c.querySelector('strong')).color}],{duration:200});}
