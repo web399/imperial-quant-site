@@ -1,0 +1,14 @@
+/* All visual tokens. Set data-market-colors="cn" for red up / green down. */
+:root{
+--bg:#0A0D12;--panel:#10151C;--raised:#161C25;--border:rgba(255,255,255,.06);--border-strong:rgba(255,255,255,.12);
+--accent:#22D3EE;--text:#E6EDF3;--secondary:#8B98A9;--weak:#5B6677;--up:#16C784;--down:#EA3943;
+--accent-soft:rgba(34,211,238,.08);--focus:rgba(34,211,238,.22);--grid:rgba(255,255,255,.025);--shadow:inset 0 1px 0 rgba(255,255,255,.02);
+--font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;--mono:"JetBrains Mono","IBM Plex Mono",Consolas,monospace;
+--s0:0px;--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;
+--radius:4px;--line:1px;--rail:56px;--rail-open:200px;--bar:48px;--control:32px;--row:32px;
+--tiny:11px;--small:12px;--body:13px;--heading:16px;--metric:28px;--hero:32px;
+--tracking:.04em;--leading:1.7;--motion:140ms;--flash:200ms;--icon:20px;
+--navy:var(--bg);--navy-mid:var(--panel);--gold:var(--accent);--white:var(--text);--muted:var(--secondary);
+}
+[data-market-colors="cn"]{--up:#EA3943;--down:#16C784}
+

@@ -5,288 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="帝国量化资本 Imperial Quant Capital：了解量化研究、策略框架与风险管理，联系团队交流合作。">
   <title>帝国量化资本 | Imperial Quant Capital</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy: #060E1E;
-      --navy-mid: #0C1A30;
-      --navy-light: #112244;
-      --blue: #1A4FD8;
-      --gold: #C9A84C;
-      --gold-light: #E8CC7A;
-      --white: #F0EDE8;
-      --muted: #7A8BA8;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Noto Sans SC', sans-serif;
-      overflow-x: hidden;
-    }
-    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.4; }
-
-    /* HEADER */
-    header {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      padding: 18px 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-      background: rgba(6,14,30,0.93);
-      backdrop-filter: blur(12px);
-    }
-    .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-    .logo-emblem {
-      width: 46px; height: 46px;
-      border: 1.5px solid var(--gold);
-      display: grid; place-items: center;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 13px; font-weight: 700; color: var(--gold);
-      letter-spacing: 1px; position: relative;
-    }
-    .logo-emblem::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(201,168,76,0.3); }
-    .logo-text { display: flex; flex-direction: column; }
-    .logo-text .cn { font-size: 15px; letter-spacing: 3px; font-weight: 700; color: var(--white); font-family: 'Noto Serif SC', serif; }
-    .logo-text .en { font-size: 9px; letter-spacing: 2px; color: var(--gold); margin-top: 2px; }
-    nav { display: flex; gap: 36px; align-items: center; }
-    nav a {
-      text-decoration: none; color: var(--muted);
-      font-size: 13px; letter-spacing: 1px;
-      transition: color 0.3s; position: relative;
-    }
-    nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
-    nav a:hover { color: var(--gold); }
-    nav a:hover::after { width: 100%; }
-    .nav-cta { padding: 8px 20px; border: 1px solid var(--gold); color: var(--gold) !important; font-size: 12px !important; transition: all 0.3s !important; }
-    .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
-    .nav-cta::after { display: none !important; }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; padding: 120px 60px 80px; text-align: center;
-    }
-    .hero-grid {
-      position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(26,79,216,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(26,79,216,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .hero-content { position: relative; z-index: 2; max-width: 960px; }
-    .hero-badge {
-      display: inline-block; margin-bottom: 32px; padding: 7px 20px;
-      border: 1px solid rgba(201,168,76,0.4); font-size: 11px; letter-spacing: 3px; color: var(--gold);
-      background: rgba(201,168,76,0.06);
-    }
-    .hero-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(36px, 6vw, 76px); font-weight: 300; line-height: 1.2;
-      margin-bottom: 24px;
-    }
-    .hero-title em { font-style: normal; color: var(--gold); }
-    .hero-sub { font-size: 14px; letter-spacing: 2px; color: var(--muted); margin-bottom: 48px; line-height: 2; }
-    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-gold { padding: 14px 36px; background: var(--gold); color: var(--navy); font-size: 13px; letter-spacing: 1px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .btn-outline { padding: 14px 36px; border: 1px solid rgba(201,168,76,0.4); color: var(--white); font-size: 13px; letter-spacing: 1px; text-decoration: none; transition: all 0.3s; }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-    .hero-stats { display: flex; justify-content: center; gap: 60px; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(201,168,76,0.1); flex-wrap: wrap; }
-    .stat-num { font-family: 'Noto Serif SC', serif; font-size: 42px; font-weight: 600; color: var(--gold); display: block; line-height: 1; }
-    .stat-label { font-size: 11px; letter-spacing: 1px; color: var(--muted); margin-top: 8px; display: block; }
-
-    /* SECTIONS */
-    section { position: relative; z-index: 1; }
-    .sec-inner { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
-    .sec-head { text-align: center; margin-bottom: 64px; }
-    .sec-label { font-size: 11px; letter-spacing: 3px; color: var(--gold); display: block; margin-bottom: 14px; }
-    .sec-title { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 300; }
-    .divider { width: 60px; height: 1px; background: var(--gold); margin: 18px auto 0; }
-
-    /* ABOUT */
-    #about { padding: 120px 0; background: var(--navy-mid); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .about-text p { font-size: 14px; line-height: 2.2; color: var(--muted); margin-bottom: 18px; }
-    .about-text p span { color: var(--white); }
-    .fact-card { padding: 24px 28px; border: 1px solid rgba(201,168,76,0.15); background: rgba(201,168,76,0.03); display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px; transition: border-color 0.3s; }
-    .fact-card:hover { border-color: rgba(201,168,76,0.4); }
-    .fact-icon { width: 40px; height: 40px; flex-shrink: 0; border: 1px solid var(--gold); display: grid; place-items: center; font-size: 16px; }
-    .fact-card h4 { font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 6px; }
-    .fact-card p { font-size: 13px; color: var(--muted); line-height: 1.8; }
-
-    /* GLOBAL */
-    #global { padding: 120px 0; }
-    .offices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-    .office-card { padding: 40px 32px; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.08); transition: all 0.3s; position: relative; overflow: hidden; }
-    .office-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0; background: var(--gold); transition: height 0.4s; }
-    .office-card:hover::before { height: 100%; }
-    .office-flag { font-size: 28px; margin-bottom: 16px; display: block; }
-    .office-city { font-family: 'Noto Serif SC', serif; font-size: 24px; color: var(--white); margin-bottom: 4px; }
-    .office-role { font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 14px; }
-    .office-desc { font-size: 13px; color: var(--muted); line-height: 1.9; }
-
-    /* COMPETENCIES */
-    #competencies { padding: 120px 0; background: var(--navy-mid); }
-    .comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .comp-card { padding: 40px 28px; border: 1px solid rgba(201,168,76,0.12); background: var(--navy); position: relative; overflow: hidden; transition: all 0.35s; }
-    .comp-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
-    .comp-num { font-family: 'Noto Serif SC', serif; font-size: 64px; font-weight: 700; color: rgba(201,168,76,0.07); position: absolute; top: 12px; right: 20px; line-height: 1; }
-    .comp-card h3 { font-family: 'Noto Serif SC', serif; font-size: 20px; color: var(--white); margin-bottom: 12px; }
-    .comp-card p { font-size: 13px; color: var(--muted); line-height: 2; }
-    .comp-tag { display: inline-block; margin-top: 18px; padding: 4px 12px; border: 1px solid rgba(201,168,76,0.3); font-size: 10px; letter-spacing: 2px; color: var(--gold); }
-
-    /* ALPHA ENGINE */
-    #alpha { padding: 120px 0; }
-    .alpha-wrap { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
-    .alpha-tabs { display: flex; flex-direction: column; }
-    .alpha-tab { padding: 22px 24px; border: 1px solid rgba(201,168,76,0.1); border-bottom: none; cursor: pointer; transition: all 0.3s; }
-    .alpha-tab:last-child { border-bottom: 1px solid rgba(201,168,76,0.1); }
-    .alpha-tab:hover, .alpha-tab.active { background: rgba(201,168,76,0.05); border-color: rgba(201,168,76,0.3); }
-    .tab-title { font-size: 13px; letter-spacing: 1px; color: var(--white); margin-bottom: 4px; }
-    .tab-sub { font-size: 11px; color: var(--muted); }
-    .alpha-tab.active .tab-title { color: var(--gold); }
-    .alpha-panel { padding: 36px; border: 1px solid rgba(201,168,76,0.15); background: var(--navy-mid); }
-    .panel-content { display: none; }
-    .panel-content.active { display: block; }
-    .panel-content h3 { font-family: 'Noto Serif SC', serif; font-size: 26px; color: var(--white); margin-bottom: 14px; }
-    .panel-content p { font-size: 13px; color: var(--muted); line-height: 2.1; margin-bottom: 18px; }
-    .metric-row { display: flex; gap: 20px; margin-top: 24px; }
-    .metric { text-align: center; flex: 1; padding: 18px; border: 1px solid rgba(201,168,76,0.12); }
-    .metric-val { font-family: 'Noto Serif SC', serif; font-size: 30px; color: var(--gold); display: block; }
-    .metric-key { font-size: 10px; letter-spacing: 1px; color: var(--muted); margin-top: 6px; display: block; }
-
-    /* COMPLIANCE */
-    #compliance { padding: 100px 0; background: var(--navy-mid); }
-    .comp-badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .badge { padding: 28px 20px; text-align: center; border: 1px solid rgba(201,168,76,0.12); background: var(--navy); transition: border-color 0.3s; }
-    .badge:hover { border-color: rgba(201,168,76,0.35); }
-    .badge-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-    .badge h4 { font-size: 12px; letter-spacing: 1px; color: var(--white); margin-bottom: 8px; }
-    .badge p { font-size: 11px; color: var(--muted); line-height: 1.7; }
-
-    /* CONTACT */
-    #contact { padding: 120px 0; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-    .contact-info h3 { font-family: 'Noto Serif SC', serif; font-size: 32px; color: var(--white); margin-bottom: 18px; }
-    .contact-info p { font-size: 13px; color: var(--muted); line-height: 2.1; margin-bottom: 32px; }
-    .detail-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
-    .detail-icon { color: var(--gold); font-size: 14px; margin-top: 2px; }
-    .detail-text { font-size: 13px; color: var(--muted); line-height: 1.7; }
-    .detail-text strong { color: var(--white); display: block; font-size: 11px; letter-spacing: 1px; margin-bottom: 2px; }
-    .contact-form { display: flex; flex-direction: column; gap: 14px; }
-    .form-group { display: flex; flex-direction: column; gap: 7px; }
-    .form-group label { font-size: 11px; letter-spacing: 2px; color: var(--muted); }
-    .form-group input, .form-group textarea, .form-group select {
-      background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15);
-      padding: 13px 15px; color: var(--white);
-      font-family: 'Noto Sans SC', sans-serif; font-size: 13px;
-      outline: none; transition: border-color 0.3s; width: 100%;
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold); }
-    .form-group textarea { min-height: 110px; resize: vertical; }
-    .form-group select option { background: var(--navy-mid); }
-    .form-submit { padding: 15px; background: var(--gold); border: none; color: var(--navy); font-family: 'Noto Sans SC', sans-serif; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 6px; }
-    .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
-
-    /* FOOTER */
-    footer { padding: 36px 60px; border-top: 1px solid rgba(201,168,76,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .footer-l { font-size: 11px; color: var(--muted); line-height: 1.9; }
-    .footer-r { font-size: 11px; color: var(--muted); }
-    .footer-r a { color: var(--muted); text-decoration: none; }
-    .footer-r a:hover { color: var(--gold); }
-
-    /* ANIMATION */
-    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .cryptedmail:after { content: attr(data-name) "@" attr(data-domain) "." attr(data-tld); }
-
-    @media (max-width: 768px) {
-      header { padding: 14px 20px; }
-      nav { display: none; }
-      .sec-inner { padding: 0 20px; }
-      .about-grid, .alpha-wrap, .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-      .offices-grid, .comp-grid { grid-template-columns: 1fr; }
-      .comp-badges { grid-template-columns: repeat(2, 1fr); }
-      .hero-stats { gap: 28px; }
-      footer { flex-direction: column; text-align: center; padding: 28px 20px; }
-      #hero { padding: 100px 20px 60px; }
-    }
-  
-/* Responsive and accessible refinements */
-:root { --muted: #a6b3c9; }
-section { scroll-margin-top: 100px; }
-.fade-up { opacity: 1; transform: none; }
-:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 5px; }
-.menu-toggle { display:none; background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px 14px; font:inherit; }
-.hero-sub { max-width: 640px; margin-left:auto; margin-right:auto; }
-.sec-inner { max-width:1240px; }
-.metric { min-width:0; padding:18px 8px; }
-.metric-val { font-size:clamp(18px,2.4vw,30px); overflow-wrap:anywhere; }
-.form-note { color:var(--muted); font-size:12px; line-height:1.8; }
-.detail-text { overflow-wrap:anywhere; }
-@media(max-width:1050px) {
- header { padding:14px 20px; }
- nav { gap:18px; }
-}
-@media(max-width:768px) {
- .menu-toggle { display:block; }
- nav.open { display:flex; position:absolute; top:100%; left:0; right:0; padding:20px; background:var(--navy-mid); flex-direction:column; align-items:stretch; gap:8px; border-bottom:1px solid var(--gold); }
- nav a { padding:12px; }
- .hero-title { font-size:clamp(30px,8vw,48px); line-height:1.4; }
- .hero-badge { letter-spacing:1px; font-size:10px; padding:8px 10px; line-height:1.8; }
- .hero-stats { display:grid; grid-template-columns:1fr 1fr; margin-top:48px; }
- .stat-num { font-size:32px; }
- #about,#global,#competencies,#alpha,#compliance,#contact { padding:72px 0; }
- .sec-head { margin-bottom:36px; }
- .alpha-panel { padding:22px 16px; }
- .metric-row { gap:6px; }
- .metric-key { letter-spacing:0; }
- .hero-btns a { flex:1; min-width:160px; padding:14px 18px; }
-}
-@media(prefers-reduced-motion:reduce) {
- html { scroll-behavior:auto; }
- *,*::before,*::after { animation:none !important; transition:none !important; }
- #bg-canvas { display:none; }
-}
-</style>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="terminal.css">
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+
 
 <!-- 导航栏 -->
-<header>
-  <a href="#" class="logo">
-    <div class="logo-emblem">帝</div>
-    <div class="logo-text">
-      <span class="cn">帝国量化资本</span>
-      <span class="en">IMPERIAL QUANT CAPITAL</span>
-    </div>
-  </a>
-  <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单</button>
-  <nav id="main-nav" aria-label="主导航">
-    <a href="#about">关于我们</a>
-    <a href="#global">全球运营</a>
-    <a href="#competencies">核心能力</a>
-    <a href="#alpha">阿尔法引擎</a>
-    <a href="#contact" class="nav-cta">联系我们</a>
-  </nav>
-</header>
+<header class="terminal-bar"><a class="brand" href="#hero">IQC <span>IMPERIAL QUANT CAPITAL</span></a><div class="status-strip"><span>展示模式 · 数据未接入</span><span>延迟 <b>—</b></span><span>净值 <b>—</b></span><time id="terminal-clock" aria-label="本地时间">—</time></div></header>
+<aside class="side-rail"><button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="展开导航"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h18M12 3v18 M4 5h16v14H4Z"/></svg></button><nav id="main-nav" aria-label="主导航"><a href="#hero" title="总览" aria-label="总览"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 10 12 3l9 7v11H3Z M9 21v-8h6v8"/></svg><span>总览</span></a><a href="#about" title="关于我们" aria-label="关于我们"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 3h12l4 4v14H4Z M8 9h8M8 13h8M8 17h5"/></svg><span>关于我们</span></a><a href="#global" title="全球运营" aria-label="全球运营"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12h18M12 3v18 M4 5h16v14H4Z"/></svg><span>全球运营</span></a><a href="#competencies" title="核心能力" aria-label="核心能力"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 20V10m8 10V4m8 16v-8"/></svg><span>核心能力</span></a><a href="#alpha" title="阿尔法引擎" aria-label="阿尔法引擎"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16v13H4Z M8 7V3h8v4M8 12h8M8 16h5"/></svg><span>阿尔法引擎</span></a><a href="#contact" title="联系我们" aria-label="联系我们"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 5h18v14H3Z M3 5l9 8 9-8"/></svg><span>联系我们</span></a></nav></aside><main>
 
 <!-- 首屏主视觉 -->
-<section id="hero">
-  <div class="hero-grid"></div>
+<section id="hero" class="overview">
+  
   <div class="hero-content fade-up">
     <span class="hero-badge">纽约 · 伦敦 · 新加坡 · AI驱动量化投资</span>
-    <h1 class="hero-title">
-      数据驱动<em>超额收益</em><br>科技创造<em>投资价值</em>
-    </h1>
+    <h1 class="hero-title">数据驱动<em>超额收益</em> · 科技创造<em>投资价值</em></h1>
     <p class="hero-sub">基于人工智能的全球量化投资解决方案</p>
     <div class="hero-btns">
       <a href="#alpha" class="btn-gold">探索阿尔法引擎</a>
       <a href="#about" class="btn-outline">了解更多</a>
     </div>
-    <div class="hero-stats">
+    <div class="account-metrics" aria-label="账户数据未接入"><div class="account-card"><span>净值</span><strong>—</strong><small>未接入</small></div><div class="account-card"><span>当日盈亏</span><strong>—</strong><small>未接入</small></div><div class="account-card"><span>持仓</span><strong>—</strong><small>未接入</small></div><div class="account-card"><span>胜率</span><strong>—</strong><small>未接入</small></div><div class="account-card"><span>夏普</span><strong>—</strong><small>未接入</small></div><div class="account-card"><span>最大回撤</span><strong>—</strong><small>未接入</small></div></div><div class="hero-stats">
       <div class="stat">
         <span class="stat-num">200亿+</span>
         <span class="stat-label">资产管理规模</span>
@@ -307,6 +48,7 @@ section { scroll-margin-top: 100px; }
   </div>
 </section>
 
+<div class="workspace-grid">
 <!-- 关于我们 -->
 <section id="about">
   <div class="sec-inner">
@@ -359,19 +101,19 @@ section { scroll-margin-top: 100px; }
     </div>
     <div class="offices-grid fade-up">
       <div class="office-card">
-        <span class="office-flag">🇺🇸</span>
+        <span class="office-flag">US</span>
         <div class="office-city">纽约</div>
         <div class="office-role">全球总部</div>
         <p class="office-desc">时代广场4号，曼哈顿中城。负责战略领导、机构客户关系及美国股票与衍生品交易运营。</p>
       </div>
       <div class="office-card">
-        <span class="office-flag">🇬🇧</span>
+        <span class="office-flag">UK</span>
         <div class="office-city">伦敦</div>
         <div class="office-role">欧洲枢纽</div>
         <p class="office-desc">金丝雀码头。负责欧洲固收、外汇及宏观策略。在FCA监管下确保欧盟和英国市场合规运营。</p>
       </div>
       <div class="office-card">
-        <span class="office-flag">🇸🇬</span>
+        <span class="office-flag">SG</span>
         <div class="office-city">新加坡</div>
         <div class="office-role">亚太中心</div>
         <p class="office-desc">滨海湾金融中心。覆盖亚太股票、新兴市场策略，与新交所及区域交易所深度合作。</p>
@@ -391,19 +133,19 @@ section { scroll-margin-top: 100px; }
     <div class="comp-grid fade-up">
       <div class="comp-card">
         <div class="comp-num">01</div>
-        <h3>🧠 AI量化交易</h3>
+        <h3>AI量化交易</h3>
         <p>基于深度学习的因子挖掘与组合优化系统，动态适应市场 regime switching，集成梯度提升树、LSTM与Transformer模型。</p>
         <span class="comp-tag">股票 · 期货 · 外汇</span>
       </div>
       <div class="comp-card">
         <div class="comp-num">02</div>
-        <h3>⚡ 高频算法系统</h3>
+        <h3>高频算法系统</h3>
         <p>超低延迟订单执行引擎，平均成交速度23微秒。FPGA加速订单路由，覆盖40+全球交易所及暗池。</p>
         <span class="comp-tag">纳秒级 · 全球部署</span>
       </div>
       <div class="comp-card">
         <div class="comp-num">03</div>
-        <h3>📊 多因子策略体系</h3>
+        <h3>多因子策略体系</h3>
         <p>127个有效Alpha信号，年化信息比率3.2。风险平价框架在多元资产类别间平衡波动率贡献，实现稳健分散。</p>
         <span class="comp-tag">宏观 · 商品 · 利率</span>
       </div>
@@ -493,10 +235,10 @@ section { scroll-margin-top: 100px; }
       <div class="divider"></div>
     </div>
     <div class="comp-badges fade-up">
-      <div class="badge"><span class="badge-icon">🏛</span><h4>SEC 注册</h4><p>已向美国证券交易委员会注册为投资顾问</p></div>
-      <div class="badge"><span class="badge-icon">🇬🇧</span><h4>FCA 授权</h4><p>经英国金融行为监管局授权，具备欧盟市场准入资质</p></div>
-      <div class="badge"><span class="badge-icon">🇸🇬</span><h4>MAS 持牌</h4><p>持有新加坡金融管理局颁发的亚太运营牌照</p></div>
-      <div class="badge"><span class="badge-icon">🔒</span><h4>ISO 27001</h4><p>通过信息安全管理体系认证，保障客户数据与系统安全</p></div>
+      <div class="badge"><span class="badge-icon">US</span><h4>SEC 注册</h4><p>已向美国证券交易委员会注册为投资顾问</p></div>
+      <div class="badge"><span class="badge-icon">UK</span><h4>FCA 授权</h4><p>经英国金融行为监管局授权，具备欧盟市场准入资质</p></div>
+      <div class="badge"><span class="badge-icon">SG</span><h4>MAS 持牌</h4><p>持有新加坡金融管理局颁发的亚太运营牌照</p></div>
+      <div class="badge"><span class="badge-icon">ISO</span><h4>ISO 27001</h4><p>通过信息安全管理体系认证，保障客户数据与系统安全</p></div>
     </div>
   </div>
 </section>
@@ -521,14 +263,14 @@ section { scroll-margin-top: 100px; }
           <span class="detail-icon">◎</span>
           <div class="detail-text">
             <strong>联系邮箱</strong>
-            <span class="cryptedmail" data-name="wanghongyaowang355" data-domain="gmail" data-tld="com" style="cursor:pointer;text-decoration:underline;color:var(--gold);" onclick="this.outerHTML='<a href=\'mailto:wanghongyaowang355@gmail.com\' style=\'color:var(--gold)\'>wanghongyaowang355@gmail.com</a>'"></span>
+            <span class="cryptedmail" data-name="wanghongyaowang355" data-domain="gmail" data-tld="com"  onclick="this.outerHTML='<a href=\'mailto:wanghongyaowang355@gmail.com\' style=\'color:var(--gold)\'>wanghongyaowang355@gmail.com</a>'"></span>
           </div>
         </div>
         <div class="detail-item">
           <span class="detail-icon">◉</span>
           <div class="detail-text">
             <strong>联系邮箱</strong>
-            <span class="cryptedmail" data-name="keenyi91com" data-domain="gmail" data-tld="com" style="cursor:pointer;text-decoration:underline;color:var(--gold);" onclick="this.outerHTML='<a href=\'mailto:keenyi91com@gmail.com\' style=\'color:var(--gold)\'>keenyi91com@gmail.com</a>'"></span>
+            <span class="cryptedmail" data-name="keenyi91com" data-domain="gmail" data-tld="com"  onclick="this.outerHTML='<a href=\'mailto:keenyi91com@gmail.com\' style=\'color:var(--gold)\'>keenyi91com@gmail.com</a>'"></span>
           </div>
         </div>
       </div>
@@ -554,10 +296,11 @@ section { scroll-margin-top: 100px; }
   </div>
 </section>
 
+</div></main>
 <!-- 页脚 -->
 <footer>
   <div class="footer-l">
-    <strong style="color:var(--white);letter-spacing:2px;font-size:12px;">帝国量化资本</strong><br>
+    <strong >帝国量化资本</strong><br>
     © 2024 Imperial Quant Capital LLC. 保留所有权利。<br>
     投资产品非存款保险保障，非银行担保，可能发生亏损。
   </div>
@@ -569,30 +312,6 @@ section { scroll-margin-top: 100px; }
 </footer>
 
 <script>
-  /* 粒子背景 */
-  const canvas = document.getElementById('bg-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
-  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
-  for (let i = 0; i < 80; i++) particles.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, r: Math.random()*1.5+0.3, dx: (Math.random()-0.5)*0.3, dy: (Math.random()-0.5)*0.3, alpha: Math.random()*0.5+0.1 });
-  function draw() {
-    if (document.hidden) { requestAnimationFrame(draw); return; }
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p => {
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(201,168,76,${p.alpha})`; ctx.fill();
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0||p.x>W) p.dx*=-1; if(p.y<0||p.y>H) p.dy*=-1;
-    });
-    for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++){
-      const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y, d=Math.sqrt(dx*dx+dy*dy);
-      if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(26,79,216,${0.15*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke();}
-    }
-    requestAnimationFrame(draw);
-  }
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
-
   /* 滚动淡入 */
   const obs = new IntersectionObserver(entries => {
     entries.forEach((e,i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); }});
@@ -630,5 +349,12 @@ document.getElementById('inquiry-form').addEventListener('submit',e=>{
  window.location.href='mailto:keenyi91com@gmail.com?subject='+encodeURIComponent('官网咨询：'+data.get('type'))+'&body='+encodeURIComponent(body);
  document.getElementById('form-status').textContent='已尝试打开邮件应用，邮件尚未自动发送。如未打开，请直接发送至 keenyi91com@gmail.com。';
 });
+</script><script>
+/* Presentation only: no market requests or trading state. */
+const rail=document.querySelector('.side-rail');
+new MutationObserver(()=>rail.classList.toggle('expanded',document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true')).observe(document.querySelector('.menu-toggle'),{attributes:true,attributeFilter:['aria-expanded']});
+function renderClock(){document.getElementById('terminal-clock').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false});}
+renderClock();setInterval(renderClock,1000);
 </script></body>
 </html>
+
