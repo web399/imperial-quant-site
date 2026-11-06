@@ -355,6 +355,8 @@ const rail=document.querySelector('.side-rail');
 new MutationObserver(()=>rail.classList.toggle('expanded',document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='true')).observe(document.querySelector('.menu-toggle'),{attributes:true,attributeFilter:['aria-expanded']});
 function renderClock(){document.getElementById('terminal-clock').textContent=new Date().toLocaleTimeString('zh-CN',{hour12:false});}
 renderClock();setInterval(renderClock,1000);
-</script></body>
+</script><script src="mockData.js"></script>
+<script src="metrics.js"></script>
+</body>
 </html>
 

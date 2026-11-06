@@ -12,3 +12,5 @@
 }
 [data-market-colors="cn"]{--up:#EA3943;--down:#16C784}
 
+
+:root{--metric-live:20px;--spark-height:28px}

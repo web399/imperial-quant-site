@@ -3,3 +3,16 @@
 @media(max-width:700px){.brand span,.status-strip>span:not(:first-child){display:none}.status-strip{font-size:var(--tiny)}main{margin-left:var(--s0);padding:calc(var(--bar) + var(--s3)) var(--s3) calc(var(--rail) + var(--s4))}.side-rail{top:auto;bottom:0;width:100%;height:var(--rail);display:flex;border-top:var(--line) solid var(--border-strong);padding:var(--s1)}.side-rail .menu-toggle{display:none}.side-rail nav{display:flex;flex-direction:row;justify-content:space-around;margin:var(--s0);width:100%;gap:var(--s0)}.side-rail nav a{flex-direction:column;gap:var(--s0);height:auto;padding:var(--s1);font-size:var(--tiny)}.side-rail nav a span{display:block}.side-rail.expanded{width:100%}.workspace-grid{display:flex;flex-direction:column}.workspace-grid>section{width:100%}.account-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.account-card{padding:var(--s2)}.hero-title{font-size:var(--heading)}.hero-btns{margin-left:var(--s0)}.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}.stat{flex-direction:column;gap:var(--s0)}.sec-inner{padding:var(--s3)}.contact-form{gap:var(--s2)}footer{margin-left:var(--s0);padding-bottom:calc(var(--rail) + var(--s4));flex-direction:column}.alpha-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.alpha-tab{padding:var(--s1)}.tab-title{font-size:var(--tiny)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
+
+/* Live demo metrics; no changes to non-metric components. */
+.account-card.live-metric{position:relative;grid-template-columns:minmax(0,1fr);gap:var(--s1);min-width:0}
+.live-metric>strong{font-size:var(--metric-live);line-height:1.4;white-space:nowrap;letter-spacing:0;font-variant-numeric:tabular-nums;min-height:var(--s8)}
+.live-metric>small{position:absolute;right:var(--s2);bottom:var(--s2);font-size:var(--tiny)}
+.live-metric .metric-detail{font:var(--tiny) var(--mono);min-height:var(--s4);color:var(--secondary)}
+.live-metric .sparkline{width:100%;height:var(--spark-height);color:var(--up);margin-bottom:var(--s4);overflow:hidden}
+.live-metric .sparkline.negative{color:var(--down)}
+.live-metric .sparkline[hidden]{display:none}
+@media(max-width:1100px){.account-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:450px){.account-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.account-card.live-metric{align-content:start;grid-template-rows:var(--s5) var(--s8) var(--s4) var(--spark-height);padding-bottom:var(--s6)}
